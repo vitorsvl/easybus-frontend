@@ -10,12 +10,11 @@ function LinhaComponent() {
   const [linha, setLinha] = useState([]);
 //   const [viagemData, setViagemData] = useState([]);
 
-
   useEffect(() => {
     api.get(`/api/linhas/${id}`)
       .then((response) => {
         setLinha(response.data);
-        console.log(response.data)
+        // console.log(response.data)
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -35,19 +34,20 @@ function LinhaComponent() {
             <div>
                 <p className='text-main-500 font-semibold'>Cidade origem</p>
                 <p className='text-3xl font-bold mb-4'>{linha.cidade_origem}</p>
+                {console.log(linha.cidade_destino)}
                 <p className='text-main-500 font-semibold'>Cidade destino</p>
                 <p className='text-3xl font-bold mb-4'>{linha.cidade_destino}</p>
             </div>
 
             <div>
                 
-              <div  className="block max-w-sm py-4 px-12 bg-main-100 shadow-lg rounded-lg hover:bg-gray-100">         
-                  <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{linha.empresa.nome}</h5>
-                  <p className='text-main-500 font-semibold'>Telefone</p>
-                  <p className='font-medium pb-2'>{linha.empresa.telefone}</p>
-                  <p className='text-main-500 font-semibold'>Email</p>
-                  <p className='font-medium'>{linha.empresa.email}</p>
-              </div>
+            <Link to={`/empresas/${linha?.empresa?.id}`} className="block max-w-sm py-4 px-12 bg-main-100 shadow-lg rounded-lg hover:bg-gray-100">         
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{linha?.empresa?.nome}</h5>
+                <p className='text-main-500 font-semibold'>Telefone</p>
+                <p className='font-medium pb-2'>{linha?.empresa?.telefone}</p>
+                <p className='text-main-500 font-semibold'>Email</p>
+                <p className='font-medium'>{linha?.empresa?.email}</p>
+            </Link>
 
             </div>
         </div>
