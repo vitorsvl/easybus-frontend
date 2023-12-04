@@ -27,14 +27,12 @@ function CreateEmpresaForm() {
         
         setTimeout(() => {
           navigate(`/empresas/${response.data.id}`); 
-        }, 7000);
+        }, 3000);
       }
     } catch (error) {
       console.error('API request error:', error);
     }
   };
-
-  // Criar o handle submit
 
   return (
     <div className="p-2">

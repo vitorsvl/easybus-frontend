@@ -1,21 +1,26 @@
 // src/components/ExampleComponent.js
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import api from '../api';
 import { useParams, Link } from 'react-router-dom';
+import { AuthContext } from '../contexts/authContext';
 
 
 // HOME DO FUNCIONARIO //
 
 function HomeFuncionario() {
 
-  const { id }  = useParams();
-  const [funcionario, setFuncionario] = useState([]);
-  // const [empresaData, setEmpresaData] = useState([]);
+  const {user, token} = useContext(AuthContext);
+  
+  console.log(user)
+  const id = user['funcionario']['id']; 
+  
   const [linhas, setLinhas] = useState([]);
+  const [funcionario, setFuncionario] = useState([]);
 
+  // console.log("token:",token);
   useEffect(() => {
     //pegando os dados do funcionario { nome, email, cpf, empresa }
-    api.get(`/api/funcionarios/${id}`)
+    api.get(`/api/funcionarios/${id}`, { headers: { Authorization: `Bearer ${token}` }})
       .then((response) => {
         setFuncionario(response.data);
       })
@@ -23,14 +28,15 @@ function HomeFuncionario() {
         console.error('Error fetching data:', error);
       });
       
-  }, [id]);
-
+  }, [id, token]);
+  // console.log(funcionario);
   const empresa_id = funcionario.empresa_id;
 
   useEffect(() => {
     if (empresa_id != null) {
    
-      api.get(`/api/empresas/${funcionario.empresa_id}/linhas`)
+      api.get(`/api/empresas/${funcionario.empresa_id}/linhas`,  
+      { headers: { Authorization: `Bearer ${token}` }})
       .then((response) => {
         setLinhas(response.data);
       })

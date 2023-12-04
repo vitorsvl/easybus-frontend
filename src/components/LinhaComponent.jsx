@@ -26,7 +26,7 @@ function LinhaComponent() {
 
       {/* TITULO */}
         <div> 
-        <h1 className='text-4xl font semibold border-l-4 border-main-500 mb-6'>Linha intermunicipal</h1>
+        <h1 className='text-4xl font semibold border-l-4 rounded-lg p-2 border-main-500 mb-6'>Linha intermunicipal</h1>
         </div>
 
         {/* CIDADES E CARD EMPRESA */}
