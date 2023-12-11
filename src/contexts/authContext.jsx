@@ -12,10 +12,14 @@ const AuthProvider = ({ children }) => {
 
   const login = (userData) => {
 
-    setUser(userData.user);
+    const userWithRole = { ...userData.user, role: userData.role };
+
+    setUser(userWithRole);
+    // setUser(userData.user);
+    console.log(user);
     setToken(userData.token);
 
-    localStorage.setItem('authUser', JSON.stringify(userData.user));
+    localStorage.setItem('authUser', JSON.stringify(userWithRole));
     localStorage.setItem('authToken', userData.token);
   };
 

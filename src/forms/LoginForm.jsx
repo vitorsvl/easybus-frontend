@@ -24,7 +24,8 @@
             const response = await api.post('/api/login', requestData);
 
             const userData = response.data
-            const userType = userData['user_type'];
+            const userType = userData.role;
+            
 
             delete userData['user_type']
 
@@ -32,13 +33,13 @@
                 // response vai conter o token de login, dados do usuário e tipo
                 
                 login(userData); // set context
-            
+                console.log("fez o login, redirecionando (LoginForm)")
                 // redireciona de acordo com o tipo do usuário
-                if (userType == 0) {
+                if (userType == 'administrador') {
                     navigate(`/administrador/home`) ;
-                } else if (userType == 1) {
+                } else if (userType == 'funcionario') {
                     navigate(`/funcionario/home`);
-                } else if (userType == 2) {
+                } else if (userType == 'passageiro') {
                     navigate(`/passageiro/home`);
                 }
             

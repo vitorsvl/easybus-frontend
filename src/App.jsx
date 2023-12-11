@@ -17,6 +17,7 @@ import FavoritasComponent from './components/FavoritasComponent';
 import HomeAdministrador from './components/HomeAdministrador';
 import AdmEmpresaComponent from './components/AdmEmpresaComponent';
 
+import ProtectedRoute from './components/utils/PrivateRoute';
 function App() {
 
   return (
@@ -32,19 +33,44 @@ function App() {
         <Route path="/cadastrar" element={ <CreatePassageiroComponent /> } />
 
         {/* PASSAGEIRO */}
-        <Route path="passageiro/home" element={ <Home /> } />
-        <Route path="passageiro/:id/favoritas" element={ <FavoritasComponent /> } />
+        <Route
+          path="passageiro/home"
+          element={<ProtectedRoute element={<Home />} roles={['passageiro']} />}
+        />
+        <Route
+          path="passageiro/:id/favoritas"
+          element={<ProtectedRoute element={<FavoritasComponent />} roles={['passageiro']} />}
+        />
         
         {/* FUNCIONÁRIO */}
-        <Route path="funcionario/home/" element={ <HomeFuncionario /> } />
-        <Route path="empresas/:id/linhas/create" element={ <CreateLinhaComponent /> } />
+        {/* Rotas protegidas para Funcionário */}
+        <Route
+          path="funcionario/home"
+          element={<ProtectedRoute element={<HomeFuncionario />} roles={['funcionario']} />}
+        />
+        <Route
+          path="empresas/:id/linhas/create"
+          element={<ProtectedRoute element={<reateLinhaComponent />} roles={['funcionario']} />}
+        />
 
         {/* ADM */}
-        <Route path="administrador/home/" element={ <HomeAdministrador /> } />
-        <Route path="empresas/criar" element={ <CreateEmpresaComponent /> } />
-        <Route path="administrador/empresas/:id" element={ <AdmEmpresaComponent /> } />
-        <Route path="funcionarios/criar" element={ <CreateFuncionarioComponent /> } />
-
+        {/* Rotas protegidas para Administrador */}
+        <Route
+          path="administrador/home"
+          element={<ProtectedRoute element={<HomeAdministrador />} roles={['administrador']} />}
+        />
+        <Route
+          path="empresas/criar"
+          element={<ProtectedRoute element={<CreateEmpresaComponent />} roles={['administrador']} />}
+        />
+        <Route
+          path="administrador/empresas/:id"
+          element={<ProtectedRoute element={<AdmEmpresaComponent />} roles={['administrador']} />}
+        />
+        <Route
+          path="funcionarios/criar"
+          element={<ProtectedRoute element={<CreateFuncionarioComponent />} roles={['administrador']} />}
+        />
       </Routes>
     </BrowserRouter>  
   </AuthProvider>
