@@ -88,9 +88,7 @@ function AdmEmpresaComponent() {
               </div>       
             ))}
           </div>
-            <Link to={`/empresas/criar`} className="text-white hover:bg-main-600 p-3 text-sm font-medium bg-main-500 rounded-md">
-              Novo Funcionario
-            </Link>
+            
         </div>
       </div>
     </div>

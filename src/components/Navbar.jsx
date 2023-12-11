@@ -56,7 +56,7 @@ function Navbar() {
             </li>
             <li>
               {/* criar pagina de criação de usuário */}
-              <Link to={`/`}>Criar conta</Link>
+              <Link to={`/cadastrar`}>Criar conta</Link>
             </li>
            </ul> 
            }

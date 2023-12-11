@@ -69,6 +69,7 @@ function HomeFuncionario() {
 
     {/* VISAO GERAL DAS LINHAS DA EMPRESA */}
     <h3 className="mt-4 text-2xl font-semibold">Linhas</h3>
+    {linhas.length > 0 ? (
     <div className="mt-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {linhas.map((linha) => (
         <div key={linha.id} className="bg-white shadow-lg rounded-lg p-4">
@@ -86,13 +87,17 @@ function HomeFuncionario() {
           </div>
         </div>
       ))}
-    
       <div className="mt-4">
         <Link to={`/empresas/${funcionario.empresa_id}/linhas`} className="text-main-500 block text-center py-2 mt-12 rounded-md border border-main-500 hover:bg-main-500 hover:text-white">
           Ver todas
           </Link>
       </div>
     </div>
+    ) : (
+      <p className="text-main-500 text-center mt-4">
+        A empresa não tem linhas cadastradas.
+      </p>
+    )}
 
     <div className="mt-4">
       <Link to={`/empresas/${funcionario.empresa_id}/linhas/create`} className="text-white hover:text-main-600 p-4 mt-4 bg-main-500 rounded-md">

@@ -26,7 +26,7 @@ function CreateEmpresaForm() {
         setSuccessMessage('Empresa criada com sucesso!');
         
         setTimeout(() => {
-          navigate(`/empresas/${response.data.id}`); 
+          navigate(`administrador/empresas/${response.data.id}`); 
         }, 3000);
       }
     } catch (error) {

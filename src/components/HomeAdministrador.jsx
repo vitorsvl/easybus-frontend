@@ -55,6 +55,11 @@ function HomeAdministrador() {
         <Link to={`/empresas/criar`} className="text-white hover:bg-main-600 p-4 mt-4 text-lg font-medium bg-main-500 rounded-md">
           Nova Empresa
         </Link>
+        <Link to={`/funcionarios/criar`} className="ml-2 text-white hover:bg-main-600 p-4 mt-4 text-lg font-medium bg-main-500 rounded-md">
+          Novo Funcionario
+        </Link>
+      </div>
+      <div className='mt-4'>
       </div>
 
     </div>

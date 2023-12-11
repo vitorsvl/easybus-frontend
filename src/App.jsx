@@ -6,6 +6,8 @@ import Navbar from './components/Navbar';
 import EmpresaComponent from './components/EmpresaComponent';
 import CreateEmpresaComponent from './components/CreateEmpresaComponent';
 import CreateFuncionarioComponent from './components/CreateFuncionarioComponent';
+import CreatePassageiroComponent from './components/CreatePassageiroComponent';
+import CreateLinhaComponent from './components/CreateLinhaComponent';
 import Home from './components/Home';
 
 import LinhaComponent from './components/LinhaComponent';
@@ -27,6 +29,7 @@ function App() {
         <Route path="login" element={ <Login /> } />
         <Route path="linhas/:id" element={ <LinhaComponent /> } />
         <Route path="empresas/:id" element={ <EmpresaComponent /> } />
+        <Route path="/cadastrar" element={ <CreatePassageiroComponent /> } />
 
         {/* PASSAGEIRO */}
         <Route path="passageiro/home" element={ <Home /> } />
@@ -34,6 +37,7 @@ function App() {
         
         {/* FUNCIONÁRIO */}
         <Route path="funcionario/home/" element={ <HomeFuncionario /> } />
+        <Route path="empresas/:id/linhas/create" element={ <CreateLinhaComponent /> } />
 
         {/* ADM */}
         <Route path="administrador/home/" element={ <HomeAdministrador /> } />

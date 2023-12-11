@@ -1,64 +1,39 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
 
-
-function CreateFuncionarioForm() {
+function CreatePassageiroForm() {
   const { register, handleSubmit, formState: { errors }, getValues } = useForm();
   const [successMessage, setSuccessMessage] = useState('');
-  const [empresas, setEmpresas] = useState('');
-  
   const navigate = useNavigate();
 
-  useEffect(() => {
-    api.get(`/api/empresas/`)
-      .then((response) => {
-        setEmpresas(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-    });
-  }, []);
-
   const onSubmit = async (data) => {
-    
     try {
       const requestData = {
-        name: data.nome, // na api todos os users as colunas de nome estão como 'name'
+        name: data.nome,
         email: data.email,
-        cpf: data.cpf,
         password: data.senha,
-        empresa_id: parseInt(data.empresa, 10),
       };
-      console.log(requestData)
-      const response = await api.post('/api/funcionarios', requestData);
+
+      const response = await api.post('/api/passageiros', requestData);
 
       if (response.status === 201) {
-        
-        setSuccessMessage('Conta criada com sucesso!');
-        
+        setSuccessMessage('Passageiro cadastrado com sucesso!');
+
         setTimeout(() => {
-          navigate(`administrador/home/`); 
-        }, 3000);
+          navigate(`/home/${response.data.id}`);
+        }, 7000);
       }
     } catch (error) {
-      if (error.response && error.response.status === 422) {
-        // A resposta da API contém detalhes de validação
-        const validationErrors = error.response.data.errors;
-        console.log(validationErrors);
-  
-        // Atualize o estado ou exiba os erros no formulário
-      } else {
-        console.error('API request error:', error);
-      }
+      console.error('API request error:', error);
     }
   };
 
   return (
     <div className="p-2">
-      <div> 
-        <h1 className='text-4xl font semibold border-l-4 border-main-500 mb-6'>Cadastrar Funcionário</h1>
+      <div>
+        <h1 className='text-4xl font-semibold border-l-4 border-main-500 mb-6'>Criar Conta</h1>
       </div>
       
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-2">
@@ -67,7 +42,7 @@ function CreateFuncionarioForm() {
             Nome
           </label>
           <input
-            name="nome" id="nome" placeholder="nome"
+            name="nome" id="nome" placeholder="Nome"
             {...register('nome', {
               required: "Campo obrigatório.",
             })}
@@ -75,27 +50,7 @@ function CreateFuncionarioForm() {
           />
           {errors.nome && <p className="text-red-400 text-xs">{errors.nome.message}</p>}
         </div>
-        <div className="mb-4">
-          <label className="text-main-500 font-semibold" htmlFor="cpf">
-            CPF
-          </label>
-          <input
-            name="cpf" id="cpf" placeholder=" XXX.XXX.XXX-XX (11 digitos)"
-            {...register('cpf', {
-              required: "Campo origatório.",
-              minLength: {
-                value: 11,
-                message: "cpf inválido."
-              },
-              maxLength: {
-                value: 11,
-                message: "cpf inválido."
-              }
-            })}
-            className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-main-500 placeholder:italic"
-          />
-          {errors.cpf && <p className="text-red-400 text-xs">{errors.cpf.message}</p>}
-        </div>
+
         <div className="mb-4">
           <label className="text-main-500 font-semibold" htmlFor="email">
             Email
@@ -108,28 +63,6 @@ function CreateFuncionarioForm() {
             className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-main-500 placeholder:italic"
           />
           {errors.email && <p className="text-red-400 text-xs">{errors.email.message}</p>}
-        </div>
-        
-        <div className="mb-4">
-          <label className="text-main-500 font-semibold" htmlFor="empresa">
-            Empresa
-          </label>
-          <select
-            name="empresa"
-            id="empresa"
-            {...register('empresa', {
-                required: "Campo obrigatório.",
-            })}
-            className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-main-500"
-            >
-            <option value="" disabled>Selecione uma empresa</option>
-            {empresas && Array.isArray(empresas) && empresas.map((empresa) => (
-            <option key={empresa.id} value={empresa.id}>
-                {empresa.nome}
-            </option>
-            ))}
-          </select>
-          {errors.empresa && <p className="text-red-400 text-xs">{errors.empresa.message}</p>}
         </div>
 
         <div className="mb-4">
@@ -174,9 +107,10 @@ function CreateFuncionarioForm() {
           Cadastrar
         </button>
       </form>
+
       {successMessage && (
         <div className="flex items-center justify-center bg-green-200 rounded-lg p-1">
-            <p className="text-green-500 font-semibold text-lg">
+          <p className="text-green-500 font-semibold text-lg">
             {successMessage}
           </p>
         </div>
@@ -185,4 +119,4 @@ function CreateFuncionarioForm() {
   );
 }
 
-export default CreateFuncionarioForm;
+export default CreatePassageiroForm;
