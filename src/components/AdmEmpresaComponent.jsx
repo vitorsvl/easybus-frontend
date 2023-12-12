@@ -82,10 +82,10 @@ function AdmEmpresaComponent() {
           <p className="text-3xl font-semibold text-stone-800">Funcionários</p>
           <div className="mb-4">
             {funcionarios.map((funcionario) => (
-              <div className='flex rows'>
-                <p className=''>{funcionario.name}</p>
-                <p className=''>{funcionario.email}</p>
-              </div>       
+              <div key={funcionario.id} className="flex flex-col border-b border-gray-300 py-2">
+                <p className="text-lg font-semibold">{funcionario.name}</p>
+                <p className="text-gray-500">{funcionario.email}</p>
+              </div>
             ))}
           </div>
             

@@ -30,7 +30,6 @@ const ProtectedRoute = ({ element, roles }) => {
     // Renderizar algum tipo de componente de carregamento
     return <LoadingComponent />;
   }
-    console.log("entrou na rota protegida com ", roles, user)
   if ( user ) {
     if (!roles.includes(user.role)) {
       // Usuário está autenticado, mas não está autorizado

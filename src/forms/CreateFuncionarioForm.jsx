@@ -36,22 +36,16 @@ function CreateFuncionarioForm() {
 
       if (response.status === 201) {
         
-        setSuccessMessage('Conta criada com sucesso!');
+        setSuccessMessage('Funcionário cadastrado com sucesso!');
         
         setTimeout(() => {
-          navigate(`administrador/home/`); 
+          navigate(`/administrador/home/`); 
         }, 3000);
       }
     } catch (error) {
-      if (error.response && error.response.status === 422) {
-        // A resposta da API contém detalhes de validação
-        const validationErrors = error.response.data.errors;
-        console.log(validationErrors);
-  
-        // Atualize o estado ou exiba os erros no formulário
-      } else {
+      
         console.error('API request error:', error);
-      }
+      
     }
   };
 

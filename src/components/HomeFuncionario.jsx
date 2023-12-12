@@ -70,23 +70,23 @@ function HomeFuncionario() {
     {/* VISAO GERAL DAS LINHAS DA EMPRESA */}
     <h3 className="mt-4 text-2xl font-semibold">Linhas</h3>
     {linhas.length > 0 ? (
-    <div className="mt-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {linhas.map((linha) => (
-        <div key={linha.id} className="bg-white shadow-lg rounded-lg p-4">
-          <div>
-            <p className='text-sm text-main-500 font-medium'>Cidade origem</p>
-            <h5 className="text-xl font-semibold">{linha.cidade_origem}</h5>
-            <p className='text-sm mt-2 text-main-500 font-medium'>Cidade destino</p>
-            <h5 className="text-xl font-semibold">{linha.cidade_destino}</h5>
-            {/* Outras informações da linha, se necessário */}
-            <div className="mt-auto">
-              <Link to={`/linhas/${linha.id}`} className="block w-full text-center py-2 mt-4 bg-main-500 hover:bg-main-600 text-white rounded-md">
-                Detalhes da linha
-              </Link>
+      <div className="mt-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {linhas.map((linha) => (
+          <div key={linha.id} className="bg-white shadow-lg rounded-lg p-4">
+            <div>
+              <p className='text-sm text-main-500 font-medium'>Cidade origem</p>
+              <h5 className="text-xl font-semibold">{linha.cidade_origem}</h5>
+              <p className='text-sm mt-2 text-main-500 font-medium'>Cidade destino</p>
+              <h5 className="text-xl font-semibold">{linha.cidade_destino}</h5>
+              {/* Outras informações da linha, se necessário */}
+              <div className="mt-auto">
+                <Link to={`/linhas/${linha.id}`} className="block w-full text-center py-2 mt-4 bg-main-500 hover:bg-main-600 text-white rounded-md">
+                  Detalhes da linha
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
       <div className="mt-4">
         <Link to={`/empresas/${funcionario.empresa_id}/linhas`} className="text-main-500 block text-center py-2 mt-12 rounded-md border border-main-500 hover:bg-main-500 hover:text-white">
           Ver todas

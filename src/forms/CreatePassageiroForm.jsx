@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../contexts/authContext";
 import api from '../api';
 
 function CreatePassageiroForm() {
   const { register, handleSubmit, formState: { errors }, getValues } = useForm();
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
 
   const onSubmit = async (data) => {
     try {
@@ -20,10 +23,23 @@ function CreatePassageiroForm() {
 
       if (response.status === 201) {
         setSuccessMessage('Passageiro cadastrado com sucesso!');
+        
+        const requestDataLogin = {
+          email: data.email,
+          password: data.senha,
+        };
+  
+        const responseLogin = await api.post('/api/login', requestDataLogin);
+  
+        if (responseLogin.status === 200) {
 
-        setTimeout(() => {
-          navigate(`/home/${response.data.id}`);
-        }, 7000);
+          const userData = responseLogin.data; 
+          login(userData); 
+        
+          setTimeout(() => {
+            navigate(`/passageiro/home`);
+          }, 3000);
+        }
       }
     } catch (error) {
       console.error('API request error:', error);

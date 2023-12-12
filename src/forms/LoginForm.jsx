@@ -33,7 +33,7 @@
                 // response vai conter o token de login, dados do usuário e tipo
                 
                 login(userData); // set context
-                console.log("fez o login, redirecionando (LoginForm)")
+              
                 // redireciona de acordo com o tipo do usuário
                 if (userType == 'administrador') {
                     navigate(`/administrador/home`) ;
