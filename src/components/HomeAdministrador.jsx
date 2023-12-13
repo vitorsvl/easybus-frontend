@@ -8,14 +8,13 @@ import { Link } from 'react-router-dom';
 function HomeAdministrador() {
 
   const { user, token } = useContext(AuthContext);
-  console.log(user)
+
   const [empresas, setEmpresas] = useState([]);
   //   fazer get para empresas
 
   useEffect(() => {
 
-    api.get(`/api/empresas/`,  
-    { headers: { Authorization: `Bearer ${token}` }})
+    api.get(`/api/empresas/`)
     .then((response) => {
       setEmpresas(response.data);
     })
@@ -24,7 +23,6 @@ function HomeAdministrador() {
     });
   }, [token]);
 
-  console.log(empresas)
   return (
     <div className="p-4">
       <div>

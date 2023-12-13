@@ -15,12 +15,11 @@ const AuthProvider = ({ children }) => {
     const userWithRole = { ...userData.user, role: userData.role };
 
     setUser(userWithRole);
-    // setUser(userData.user);
-    console.log(user);
     setToken(userData.token);
 
     localStorage.setItem('authUser', JSON.stringify(userWithRole));
     localStorage.setItem('authToken', userData.token);
+ 
   };
 
   // Verifica se há dados de autenticação ao carregar o contexto
@@ -34,6 +33,7 @@ const AuthProvider = ({ children }) => {
       setUser(JSON.parse(storedUser));
       setToken(storedToken);
     }
+   
   }, []);
 
   const logout = () => {
@@ -45,10 +45,10 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('authToken');
   };
 
-  useEffect(() => {
-    console.log("User:", user);
-    console.log("Token:", token);
-  }, [user, token]);
+  // useEffect(() => {
+  //   console.log("User:", user);
+  //   console.log("Token:", token);
+  // }, [user, token]);
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>

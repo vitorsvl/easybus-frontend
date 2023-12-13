@@ -12,12 +12,21 @@ function Home() {
   const { id } = useParams();
   const [busca, setBusca] = useState('');
   const [linhas, setLinhas] = useState(null);
+  const [linhasDestaque, setLinhasDestaque] = useState(null);
 
   const { handleSubmit, control } = useForm();
 
+  useEffect(() => {
+    api.get('/api/linhas')
+      .then((response) => {
+        setLinhasDestaque(response.data);
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar linhas em destaque:', error);
+      });
+  }, []);
+
   const onSubmit = (data) => {
-    // Lógica de pesquisa aqui
-    console.log('Termo de busca:', data.searchTerm);
     setBusca(data.searchTerm);
   };
 
@@ -33,12 +42,11 @@ function Home() {
           console.error('Error fetching data:', error);
         });
     }
-  }, [busca]); // Adicione 'busca' como uma dep
-
+  }, [busca]); 
 
   return (
-    <div className="p-4">
-      <div className='text-center mt-4 pt-1'>
+    <div className="p-4 mb-8">
+      <div className='text-center mt-4 mb-4 pt-1'>
         {/* BUSCA */}
         <form onSubmit={handleSubmit(onSubmit)} className="m-8">
           
@@ -67,8 +75,10 @@ function Home() {
 
       {/* LINHAS ENCONTRADAS */}
 
-      {linhas !== null && linhas.length > 0 && (
+      {linhas !== null && linhas.length > 0 ? (
         <h3 className="text-2xl font-semibold">Linhas encontradas</h3>
+      ) : (
+        <h3 className="text-2xl font-semibold">Linhas em destaque</h3>
       )}
       {/* Resultados das linhas */}
       <div className="mt-4 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -93,7 +103,27 @@ function Home() {
         ) : linhas !== null ? (
           // Exibir a mensagem quando nenhuma linha for encontrada
           <p className="text-xl font-semibold ">Nenhuma linha encontrada.</p>
-        ) : null }
+        ) : (
+          
+        
+          linhasDestaque !== null && linhasDestaque.slice(0, 4).map((linha) => (
+            <div key={linha.id} className="bg-white shadow-lg rounded-lg p-4">
+              <div>
+                <p className='text-sm text-main-500 font-medium'>Cidade origem</p>
+                <h5 className="text-xl font-semibold">{linha.cidade_origem}</h5>
+                <p className='text-sm mt-2 text-main-500 font-medium'>Cidade destino</p>
+                <h5 className="text-xl font-semibold">{linha.cidade_destino}</h5>
+                {/* Outras informações da linha, se necessário */}
+                <div className="mt-auto">
+                  <Link to={`/linhas/${linha.id}`} className="block w-full text-center py-2 mt-4 bg-main-500 hover:bg-main-600 text-white rounded-md">
+                    Detalhes da linha
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))
+
+        )}
 
       </div>
     </div>

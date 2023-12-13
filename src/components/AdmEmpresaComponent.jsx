@@ -8,8 +8,22 @@ import { AuthContext } from '../contexts/authContext';
 
 function AdmEmpresaComponent() {
 
-  const { user, token } = useContext(AuthContext);
-  console.log(user, token);
+  const { user } = useContext(AuthContext);
+  
+  const handleRemoverFuncionario = async (funcionarioId) => {
+    try {
+  
+      await api.delete(`/api/funcionarios/${funcionarioId}`);
+
+      // Atualiza o estado dos funcionários após a remoção
+      setFuncionarios((prevFuncionarios) =>
+        prevFuncionarios.filter((funcionario) => funcionario.id !== funcionarioId)
+      );
+    } catch (error) {
+      console.error('Erro ao remover funcionário:', error);
+    }
+  };
+
 
   const { id } = useParams();
   const [empresa, setEmpresa] = useState('');
@@ -24,22 +38,20 @@ function AdmEmpresaComponent() {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, [id]);
+  }, [id, user]);
 
   useEffect(() => {
-    if(token) {
-    api.get(`/api/empresas/${id}/funcionarios`, {
-      headers: {Authorization: `Bearer ${token}`}
-    })
-      .then((response) => {
-        setFuncionarios(response.data['data']); // o response retorna um objeto contendo o array de funcionarios
-      })//.then(()=> alert(token))
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+    if (user) {
+      api.get(`/api/empresas/${id}/funcionarios`)
+        .then((response) => {
+          setFuncionarios(response.data['data']); // o response retorna um objeto contendo o array de funcionarios
+        })
+        .catch((error) => {
+          console.error('Error fetching data:', error);
+        });
     }
-  }, [id, token]);
-  
+  }, [id, user]);
+
   return (
     <div className="pt-2 flex-rows items-start justify-start space-y-3">
       <div className="h-auto w-11/12 py-6 bg-white rounded-lg shadow-lg mx-auto" >
@@ -82,13 +94,20 @@ function AdmEmpresaComponent() {
           <p className="text-3xl font-semibold text-stone-800">Funcionários</p>
           <div className="mb-4">
             {funcionarios.map((funcionario) => (
-              <div key={funcionario.id} className="flex flex-col border-b border-gray-300 py-2">
-                <p className="text-lg font-semibold">{funcionario.name}</p>
-                <p className="text-gray-500">{funcionario.email}</p>
+              <div key={funcionario.id} className="flex flex-row justify-between border-b border-gray-300 py-2">
+                <div>
+                  <p className="text-lg font-semibold">{funcionario.name}</p>
+                  <p className="text-gray-500">{funcionario.email}</p>
+                </div>
+                <button
+                  onClick={() => handleRemoverFuncionario(funcionario.id)}
+                  className="bg-red-500 text-white p-2  rounded-md mt-2 ml-auto cursor-pointer"
+                >
+                  Remover Funcionário
+                </button>   
               </div>
             ))}
           </div>
-            
         </div>
       </div>
     </div>

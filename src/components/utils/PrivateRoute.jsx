@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/authContext';
 
 const UnauthorizedPage = () => (
@@ -27,7 +27,6 @@ const ProtectedRoute = ({ element, roles }) => {
   }, [user]);
 
   if (loading) {
-    // Renderizar algum tipo de componente de carregamento
     return <LoadingComponent />;
   }
   if ( user ) {
@@ -37,7 +36,7 @@ const ProtectedRoute = ({ element, roles }) => {
       return <UnauthorizedPage />;
     }
   } else {
-    // Usuário não está autenticado, redirecionar para a página de login
+    // Usuário não está autenticado, redirecionar para login
     return <Navigate to="/login" />;
   }
   return element;
